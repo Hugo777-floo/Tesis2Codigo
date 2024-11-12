@@ -1,9 +1,15 @@
 export type Status = 'Aprobado' | 'Rechazado' | 'Pendiente de Aprobación';
 export interface Solicitud {
+   id: string,
     usuario: string;
     fechaRegistro: string;
     fechaPermiso: string;
     motivo: string;
-    status?: Status; // Opcional, en caso de necesitar el estado actual de la solicitud (pendiente, aprobado, rechazado)
+    status: Status;
+    horaEntrada: string;
+    horaSalida: string;
+    jefeNotificar: string;
+    descripcion: string;
+
   }
   

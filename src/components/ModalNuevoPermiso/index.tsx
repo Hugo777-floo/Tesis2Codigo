@@ -22,6 +22,7 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
     const newSolicitud: Solicitud = {
       status: defaultStatus,
       fechaRegistro: defaultFechaRegistro,
+      id: "99",
       fechaPermiso,
       motivo,
       horaEntrada,

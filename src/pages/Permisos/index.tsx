@@ -3,13 +3,14 @@ import StatusComponent from '../../components/cardPermisos';
 import { PageContainer, HeaderContainer, Title, ButtonContainer, Button } from './styles';
 import DetalleSolicitudModal from '../../components/ModalDetallePermiso';
 import EditarSolicitudModal from '../../components/ModalEditarPermiso';
-import NuevoPermisoPage from '../../components/ModalNuevoPermiso'; // Pantalla para nuevo permiso
-import { Solicitud } from './types';
-import RevisarSolicitudes from '../../components/RevisarPermisos'; // Importa el componente RevisarSolicitudes
+import NuevoPermisoPage from '../../components/ModalNuevoPermiso';
+import { Solicitud, RevisarSolicitudesDatos, Status } from './types';
+import RevisarSolicitudes from '../../components/RevisarPermisos';
 
 const PermissionsPage = () => {
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([
     {
+      id: "04",
       status: 'Pendiente de Aprobación',
       fechaRegistro: '09/10/2024',
       fechaPermiso: '16/10/2024',
@@ -21,6 +22,7 @@ const PermissionsPage = () => {
       descripcion: 'Comenté tener una evaluación parcial, sin embargo ahora es un trabajo de investigación que requerirá más tiempo',
     },
     {
+      id: "05",
       status: 'Aprobado',
       fechaRegistro: '08/10/2024',
       fechaPermiso: '08/10/2024',
@@ -32,6 +34,7 @@ const PermissionsPage = () => {
       descripcion: 'Tuve una reunión importante que me retrasó.',
     },
     {
+      id: "06",
       status: 'Rechazado',
       fechaRegistro: '01/10/2024',
       fechaPermiso: '02/10/2024',
@@ -44,10 +47,49 @@ const PermissionsPage = () => {
     },
   ]);
 
+  const [revisarSolicitudes, setRevisarSolicitudes] = useState<RevisarSolicitudesDatos[]>([
+    {
+      id: "01",
+      status: 'Pendiente de Aprobación',
+      fechaRegistro: '09/10/2024',
+      fechaPermiso: '16/11/2024',
+      motivo: 'Salida Temprana',
+      horaEntrada: 'Regular',
+      horaSalida: '2:00 PM',
+      jefeNotificar: 'Diego Mendoza',
+      usuario: 'Diego Mendoza',
+      descripcion: 'Comenté tener una evaluación parcial, sin embargo ahora es un trabajo de investigación que requerirá más tiempo',
+    },
+    {
+      id: "02",
+      status: 'Pendiente de Aprobación',
+      fechaRegistro: '08/10/2024',
+      fechaPermiso: '18/11/2024',
+      motivo: 'Entrada Tardía',
+      horaEntrada: '8:30 AM',
+      horaSalida: '5:00 PM',
+      jefeNotificar: 'Carlos Pérez',
+      usuario: 'Ana Rodríguez',
+      descripcion: 'Tuve una reunión importante que me retrasó.',
+    },
+    {
+      id: "03",
+      status: 'Pendiente de Aprobación',
+      fechaRegistro: '01/10/2024',
+      fechaPermiso: '17/11/2024',
+      motivo: 'Salida Tardía',
+      horaEntrada: '9:00 AM',
+      horaSalida: '6:00 PM',
+      jefeNotificar: 'Laura Gómez',
+      usuario: 'Pedro Ruiz',
+      descripcion: 'No se justificó adecuadamente la salida tardía.',
+    },
+  ]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isNuevoPermisoPageOpen, setIsNuevoPermisoPageOpen] = useState(false);
-  const [isRevisarSolicitudesOpen, setIsRevisarSolicitudesOpen] = useState(false); // Nuevo estado
+  const [isRevisarSolicitudesOpen, setIsRevisarSolicitudesOpen] = useState(false);
   const [selectedSolicitud, setSelectedSolicitud] = useState<Solicitud | null>(null);
 
   const openModal = (solicitud: Solicitud) => {
@@ -77,7 +119,7 @@ const PermissionsPage = () => {
   const saveSolicitud = (updatedSolicitud: Solicitud) => {
     setSolicitudes((prevSolicitudes) =>
       prevSolicitudes.map((solicitud) =>
-        solicitud.fechaRegistro === updatedSolicitud.fechaRegistro ? updatedSolicitud : solicitud
+        solicitud.id === updatedSolicitud.id ? updatedSolicitud : solicitud
       )
     );
     closeModal();
@@ -88,18 +130,74 @@ const PermissionsPage = () => {
     closeNuevoPermisoPage();
   };
 
-  const deleteSolicitud = (fechaRegistro: string) => {
+  const deleteSolicitud = (id: string) => {
     setSolicitudes((prevSolicitudes) =>
-      prevSolicitudes.filter((solicitud) => solicitud.fechaRegistro !== fechaRegistro)
+      prevSolicitudes.filter((solicitud) => solicitud.id !== id)
     );
   };
 
+  const approveSolicitud = (id: string) => {
+    setRevisarSolicitudes((prevSolicitudes) => {
+      const solicitudAprobada = prevSolicitudes.find((solicitud) => solicitud.id === id);
+      if (solicitudAprobada) {
+        setSolicitudes((prev) => [
+          ...prev,
+          { ...solicitudAprobada, status: 'Aprobado' as Status },
+        ]);
+        return prevSolicitudes.filter((solicitud) => solicitud.id !== id);
+      }
+      return prevSolicitudes;
+    });
+  };
+
+  const rejectSolicitud = (id: string) => {
+    setRevisarSolicitudes((prevSolicitudes) => {
+      const solicitudRechazada = prevSolicitudes.find((solicitud) => solicitud.id === id);
+      if (solicitudRechazada) {
+        setSolicitudes((prev) => [
+          ...prev,
+          { ...solicitudRechazada, status: 'Rechazado' as Status },
+        ]);
+        return prevSolicitudes.filter((solicitud) => solicitud.id !== id);
+      }
+      return prevSolicitudes;
+    });
+  };
+
+  const approveSelectedSolicitudes = (ids: string[]) => {
+    setRevisarSolicitudes((prevSolicitudes) => {
+      const aprobadas = prevSolicitudes.filter((solicitud) => ids.includes(solicitud.id));
+      const restantes = prevSolicitudes.filter((solicitud) => !ids.includes(solicitud.id));
+
+      setSolicitudes((prev) => [
+        ...prev,
+        ...aprobadas.map((solicitud) => ({ ...solicitud, status: 'Aprobado' as Status })),
+      ]);
+
+      return restantes;
+    });
+  };
+
+  const rejectSelectedSolicitudes = (ids: string[]) => {
+    setRevisarSolicitudes((prevSolicitudes) => {
+      const rechazadas = prevSolicitudes.filter((solicitud) => ids.includes(solicitud.id));
+      const restantes = prevSolicitudes.filter((solicitud) => !ids.includes(solicitud.id));
+
+      setSolicitudes((prev) => [
+        ...prev,
+        ...rechazadas.map((solicitud) => ({ ...solicitud, status: 'Rechazado' as Status })),
+      ]);
+
+      return restantes;
+    });
+  };
+
   const openRevisarSolicitudes = () => {
-    setIsRevisarSolicitudesOpen(true); // Abre la vista de Revisar Solicitudes
+    setIsRevisarSolicitudesOpen(true);
   };
 
   const closeRevisarSolicitudes = () => {
-    setIsRevisarSolicitudesOpen(false); // Cierra la vista de Revisar Solicitudes y vuelve a la vista principal
+    setIsRevisarSolicitudesOpen(false);
   };
 
   return (
@@ -111,47 +209,37 @@ const PermissionsPage = () => {
           defaultStatus="Pendiente de Aprobación"
           defaultFechaRegistro={new Date().toLocaleDateString()}
         />
-      ) : isRevisarSolicitudesOpen ? ( // Condición para mostrar la vista de Revisar Solicitudes
-        <RevisarSolicitudes onClose={closeRevisarSolicitudes} solicitudes={solicitudes} />
+      ) : isRevisarSolicitudesOpen ? (
+        <RevisarSolicitudes
+          onClose={closeRevisarSolicitudes}
+          solicitudes={revisarSolicitudes}
+          onApprove={approveSolicitud}
+          onReject={rejectSolicitud}
+          onApproveSelected={approveSelectedSolicitudes}
+          onRejectSelected={rejectSelectedSolicitudes}
+        />
       ) : (
         <>
           <HeaderContainer>
             <Title>Últimos Permisos Solicitados</Title>
             <ButtonContainer>
               <Button onClick={openNuevoPermisoPage}>Nuevo Permiso</Button>
-              <Button onClick={openRevisarSolicitudes}>Revisar Solicitudes</Button> {/* Botón para abrir Revisar Solicitudes */}
+              <Button onClick={openRevisarSolicitudes}>Revisar Solicitudes</Button>
             </ButtonContainer>
           </HeaderContainer>
 
-          {solicitudes.map((solicitud, index) => (
+          {solicitudes.map((solicitud) => (
             <StatusComponent
-              key={index}
+              key={solicitud.id}
               status={solicitud.status}
               fechaRegistro={solicitud.fechaRegistro}
               fechaPermiso={solicitud.fechaPermiso}
               motivo={solicitud.motivo}
               onVerDetalle={() => openModal(solicitud)}
               onEditar={() => openEditModal(solicitud)}
-              onCancelar={() => deleteSolicitud(solicitud.fechaRegistro)}
+              onCancelar={() => deleteSolicitud(solicitud.id)}
             />
           ))}
-
-          {selectedSolicitud && (
-            <DetalleSolicitudModal
-              isOpen={isModalOpen}
-              onRequestClose={closeModal}
-              solicitud={selectedSolicitud}
-            />
-          )}
-
-          {selectedSolicitud && (
-            <EditarSolicitudModal
-              isOpen={isEditModalOpen}
-              onRequestClose={closeModal}
-              solicitud={selectedSolicitud}
-              onSave={saveSolicitud}
-            />
-          )}
         </>
       )}
     </PageContainer>
