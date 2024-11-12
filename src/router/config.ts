@@ -14,6 +14,11 @@ const routes = [
     exact: true,
     component: "Permisos",
   },
+  {
+    path: "/absentismos",
+    exact: true,
+    component: "Absentismos",
+  },
 ];
 
 export default routes;

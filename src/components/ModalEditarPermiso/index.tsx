@@ -2,23 +2,24 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { EditarSolicitudModalProps } from './types';
 import {
-  Container,
+  PageContainer,
+  HeaderContainer,
   Title,
-  Form,
-  FormItem,
-  Label,
+  Button,
   Input,
   TextArea,
+  Select,
+  Label,
   ButtonContainer,
   SaveButton,
-  CancelButton
+  CancelButton,
 } from './styles';
 
 const DetalleSolicitudModal: React.FC<EditarSolicitudModalProps> = ({
   isOpen,
   onRequestClose,
   solicitud,
-  onSave
+  onSave,
 }) => {
   // Función para convertir 'DD/MM/YYYY' a 'YYYY-MM-DD'
   const formatDateToISO = (dateString: string) => {
@@ -26,90 +27,127 @@ const DetalleSolicitudModal: React.FC<EditarSolicitudModalProps> = ({
     return `${year}-${month}-${day}`;
   };
 
-  // Configuramos el estado inicial con la fecha en formato 'YYYY-MM-DD'
+  // Configuramos el estado inicial con los datos de solicitud y fecha en formato ISO
   const [formData, setFormData] = useState({
     ...solicitud,
-    fechaPermiso: formatDateToISO(solicitud.fechaPermiso)
+    fechaPermiso: formatDateToISO(solicitud.fechaPermiso),
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [openSelectId, setOpenSelectId] = useState<string | null>(null); // Controla qué select está abierto
+
+  const handleSelectOpen = (id: string) => setOpenSelectId(id);
+  const handleSelectClose = () => setOpenSelectId(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSave = () => {
-    // Si deseas conservar el formato 'DD/MM/YYYY' al guardar, convierte la fecha de vuelta
     const formattedSolicitud = {
       ...formData,
-      fechaPermiso: formData.fechaPermiso.split('-').reverse().join('/') // Convierte de 'YYYY-MM-DD' a 'DD/MM/YYYY'
+      fechaPermiso: formData.fechaPermiso.split('-').reverse().join('/'), // Convierte de 'YYYY-MM-DD' a 'DD/MM/YYYY'
     };
     onSave(formattedSolicitud);
-    onRequestClose(); // Cierra el modal después de guardar
+    onRequestClose();
   };
+
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Editar Solicitud">
-      <Container>
-        <Title>Editar Solicitud</Title>
-        <Form>
-          <FormItem>
-            <Label>Fecha Programada</Label>
+      <PageContainer>
+        <HeaderContainer>
+          <Title>Editar Solicitud</Title>
+          <Button onClick={onRequestClose}>Cerrar</Button>
+        </HeaderContainer>
+        <form>
+          <Label>
+            Fecha Programada
             <Input
               type="date"
               name="fechaPermiso"
               value={formData.fechaPermiso}
               onChange={handleChange}
             />
-          </FormItem>
-          <FormItem>
-            <Label>Motivo</Label>
-            <Input
-              type="text"
+          </Label>
+
+          <Label>
+            Motivo del Permiso
+            <Select
               name="motivo"
               value={formData.motivo}
-              onChange={handleChange}
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Hora Entrada</Label>
+              onChange={(e) => {
+                handleChange(e);
+                handleSelectClose();
+              }}
+              onFocus={() => handleSelectOpen('motivo')}
+              onBlur={handleSelectClose}
+              isOpen={openSelectId === 'motivo'} // Controla la flecha del select
+              required
+            >
+              <option value="" disabled>Selecciona un motivo</option>
+              <option value="Salida Temprana">Salida Temprana</option>
+              <option value="Entrada Tardía">Entrada Tardía</option>
+              <option value="Emergencia Familiar">Emergencia Familiar</option>
+              <option value="Evento Especial">Evento Especial</option>
+              <option value="Otro">Otro (Explique en Descripción del caso)</option>
+            </Select>
+          </Label>
+
+          <Label>
+            Hora Entrada
             <Input
-              type="text"
+              type="time"
               name="horaEntrada"
               value={formData.horaEntrada}
               onChange={handleChange}
+              required
             />
-          </FormItem>
-          <FormItem>
-            <Label>Hora Salida</Label>
+          </Label>
+
+          <Label>
+            Hora Salida
             <Input
-              type="text"
+              type="time"
               name="horaSalida"
               value={formData.horaSalida}
               onChange={handleChange}
+              required
             />
-          </FormItem>
-          <FormItem>
-            <Label>Jefe a Notificar</Label>
-            <Input
-              type="text"
+          </Label>
+
+          <Label>
+            Jefe a Notificar
+            <Select
               name="jefeNotificar"
               value={formData.jefeNotificar}
               onChange={handleChange}
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Descripción del Caso / Comentario</Label>
+              required
+            >
+              <option value="" disabled>Selecciona un jefe a notificar</option>
+              <option value="Diego Mendoza">Diego Mendoza</option>
+              <option value="Juan Sanchez">Juan Sanchez</option>
+              <option value="Abel Abelardo">Abel Abelardo</option>
+              <option value="Alejandra Gallegos">Alejandra Gallegos</option>
+              <option value="Otro">Otro (Explique en Descripción del caso)</option>
+            </Select>
+          </Label>
+
+          <Label>
+            Descripción del Caso / Comentario
             <TextArea
               name="descripcion"
               value={formData.descripcion}
               onChange={handleChange}
+              required
             />
-          </FormItem>
-        </Form>
+          </Label>
+        </form>
+        
         <ButtonContainer>
-          <SaveButton onClick={handleSave}>Editar</SaveButton>
+          <SaveButton onClick={handleSave}>Guardar Cambios</SaveButton>
           <CancelButton onClick={onRequestClose}>Cancelar</CancelButton>
         </ButtonContainer>
-      </Container>
+      </PageContainer>
     </Modal>
   );
 };

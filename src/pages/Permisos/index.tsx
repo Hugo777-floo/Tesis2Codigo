@@ -15,9 +15,9 @@ const PermissionsPage = () => {
       fechaRegistro: '09/10/2024',
       fechaPermiso: '16/10/2024',
       motivo: 'Salida Temprana',
-      horaEntrada: 'Regular',
-      horaSalida: '2:00 PM',
-      jefeNotificar: 'Diego Mendoza',
+      horaEntrada: '08:00',
+      horaSalida: '14:00',
+      jefeNotificar: 'Alejandra Gallegos',
       usuario: 'Diego Mendoza',
       descripcion: 'Comenté tener una evaluación parcial, sin embargo ahora es un trabajo de investigación que requerirá más tiempo',
     },
@@ -27,8 +27,8 @@ const PermissionsPage = () => {
       fechaRegistro: '08/10/2024',
       fechaPermiso: '08/10/2024',
       motivo: 'Entrada Tardía',
-      horaEntrada: '8:30 AM',
-      horaSalida: '5:00 PM',
+      horaEntrada: '08:30',
+      horaSalida: '17:00',
       jefeNotificar: 'Carlos Pérez',
       usuario: 'Ana Rodríguez',
       descripcion: 'Tuve una reunión importante que me retrasó.',
@@ -39,8 +39,8 @@ const PermissionsPage = () => {
       fechaRegistro: '01/10/2024',
       fechaPermiso: '02/10/2024',
       motivo: 'Salida Tardía',
-      horaEntrada: '9:00 AM',
-      horaSalida: '6:00 PM',
+      horaEntrada: '9:00',
+      horaSalida: '18:00',
       jefeNotificar: 'Laura Gómez',
       usuario: 'Pedro Ruiz',
       descripcion: 'No se justificó adecuadamente la salida tardía.',
@@ -54,8 +54,8 @@ const PermissionsPage = () => {
       fechaRegistro: '09/10/2024',
       fechaPermiso: '16/11/2024',
       motivo: 'Salida Temprana',
-      horaEntrada: 'Regular',
-      horaSalida: '2:00 PM',
+      horaEntrada: '08:00',
+      horaSalida: '14:00',
       jefeNotificar: 'Diego Mendoza',
       usuario: 'Diego Mendoza',
       descripcion: 'Comenté tener una evaluación parcial, sin embargo ahora es un trabajo de investigación que requerirá más tiempo',
@@ -66,8 +66,8 @@ const PermissionsPage = () => {
       fechaRegistro: '08/10/2024',
       fechaPermiso: '18/11/2024',
       motivo: 'Entrada Tardía',
-      horaEntrada: '8:30 AM',
-      horaSalida: '5:00 PM',
+      horaEntrada: '08:30',
+      horaSalida: '17:00',
       jefeNotificar: 'Carlos Pérez',
       usuario: 'Ana Rodríguez',
       descripcion: 'Tuve una reunión importante que me retrasó.',
@@ -78,8 +78,8 @@ const PermissionsPage = () => {
       fechaRegistro: '01/10/2024',
       fechaPermiso: '17/11/2024',
       motivo: 'Salida Tardía',
-      horaEntrada: '9:00 AM',
-      horaSalida: '6:00 PM',
+      horaEntrada: '9:00',
+      horaSalida: '18:00',
       jefeNotificar: 'Laura Gómez',
       usuario: 'Pedro Ruiz',
       descripcion: 'No se justificó adecuadamente la salida tardía.',
@@ -240,6 +240,22 @@ const PermissionsPage = () => {
               onCancelar={() => deleteSolicitud(solicitud.id)}
             />
           ))}
+
+          {selectedSolicitud && (
+            <>
+              <DetalleSolicitudModal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                solicitud={selectedSolicitud}
+              />
+              <EditarSolicitudModal
+                isOpen={isEditModalOpen}
+                onRequestClose={closeModal}
+                solicitud={selectedSolicitud}
+                onSave={saveSolicitud}
+              />
+            </>
+          )}
         </>
       )}
     </PageContainer>
@@ -247,3 +263,4 @@ const PermissionsPage = () => {
 };
 
 export default PermissionsPage;
+
