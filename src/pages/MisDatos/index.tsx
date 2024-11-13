@@ -8,14 +8,17 @@ import styled from "styled-components";
 import TabContainer from "../../components/ContenedorDato"; // Asegúrate de importar correctamente
 import { Tab } from "../../components/ContenedorDato/types"; 
 import Notification from '../../components/avisoDatos';
-
+import ConfirmModal from "../../components/ModalConfirmacion";
+import InfoModal from "../../components/ModalInformativo";
 
 const MisDatos: React.FC = () => {
   const [activeTab, setActiveTab] = useState("Datos Personales");
   const [showNotification, setShowNotification] = useState(true);
   const [isEditable, setIsEditable] = useState(false);
   const [openSelects, setOpenSelects] = useState<{ [key: string]: boolean }>({});
-
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  
   const [formData, setFormData] = useState({
     tipoDocumento: "",
     nombre: "",
@@ -74,17 +77,31 @@ const MisDatos: React.FC = () => {
   };
   
   const handleAcceptClick = () => {
-    setIsEditable(false); // Deshabilita los campos sin guardar
+    setShowConfirmModal(true); // Muestra el modal de confirmación antes de aceptar
+  };
+
+  const confirmAccept = () => {
+    setIsEditable(false);
     setShowNotification(true);
+    setShowConfirmModal(false); // Cierra el modal de confirmación
+    setShowInfoModal(true); // Muestra el modal informativo después de aceptar
+    setBackupData(formData);
+    setBackupHijos(hijos);
+  };
+
+  const closeInfoModal = () => {
+    setShowInfoModal(false); // Cierra el modal informativo
+  };
+
+  const cancelConfirm = () => {
+    setShowConfirmModal(false); // Cierra el modal de confirmación si se cancela
+    setIsEditable(true); // Permite seguir editando si se cancela la confirmación
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-
-  
-
 
   const agregarHijo = () => {
     setHijos((prevHijos) => [
@@ -103,11 +120,9 @@ const MisDatos: React.FC = () => {
     setHijos(nuevosHijos);
   };
 
-
   const toggleSelect = (name: string) => {
     setOpenSelects((prev) => ({ ...prev, [name]: !prev[name] }));
   };
-
   const renderContent = () => {
     switch (activeTab) {
       case "Datos Personales":
@@ -571,10 +586,26 @@ const MisDatos: React.FC = () => {
           <ButtonGroup>
             <AceptarButton onClick={handleAcceptClick}>Aceptar</AceptarButton>
             <CancelarButton onClick={handleCancelClick}>Cancelar</CancelarButton>
-            </ButtonGroup>
+            {/* Modal de confirmación */}
+            {showConfirmModal && (
+              <ConfirmModal
+                message="¿Estás seguro de que deseas aceptar los cambios?"
+                onConfirm={confirmAccept}
+                onCancel={cancelConfirm}
+              />
+            )}
+          </ButtonGroup>
         )}
       </Header>
       {renderContent()}
+
+      {/* Modal informativo */}
+      {showInfoModal && (
+        <InfoModal
+          message="La solicitud se realizó con exito. Será Notificada al área de Gestión Humana y a su Jefe."
+          onClose={closeInfoModal}
+        />
+      )}
     </Container>
   );
 };

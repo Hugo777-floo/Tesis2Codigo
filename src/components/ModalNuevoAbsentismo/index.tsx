@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { PageContainer, HeaderContainer, Title, Button, Input, TextArea, Select, Label } from './styles';
 import { Solicitud, Status } from './types';
+import ConfirmModal from '../../components/ModalConfirmacion';
+import InfoModal from '../../components/ModalInformativo'; // Importa el modal informativo
 
 interface NuevoPermisoPageProps {
   onSave: (newSolicitud: Solicitud) => void;
@@ -22,6 +24,8 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
   const [jefeNotificar, setJefeNotificar] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [openSelectId, setOpenSelectId] = useState<string | null>(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false); // Estado para el modal de confirmación
+  const [showInfoModal, setShowInfoModal] = useState(false); // Estado para el modal informativo
 
   const handleSelectOpen = (id: string) => setOpenSelectId(id);
   const handleSelectClose = () => setOpenSelectId(null);
@@ -33,6 +37,10 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setShowConfirmModal(true); // Muestra el modal de confirmación antes de guardar
+  };
+
+  const confirmSave = () => {
     const newSolicitud: Solicitud = {
       status: defaultStatus,
       fechaRegistro: defaultFechaRegistro,
@@ -46,6 +54,17 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
       descripcion,
     };
     onSave(newSolicitud);
+    setShowConfirmModal(false); // Cierra el modal de confirmación
+    setShowInfoModal(true); // Muestra el modal informativo después de guardar
+  };
+
+  const closeInfoModal = () => {
+    setShowInfoModal(false);
+    onCancel(); // Vuelve a la página principal después de cerrar el modal informativo
+  };
+
+  const cancelConfirm = () => {
+    setShowConfirmModal(false); // Cierra el modal de confirmación si se cancela
   };
 
   return (
@@ -120,6 +139,23 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
 
         <Button type="submit">Enviar</Button>
       </form>
+
+      {/* Modal de confirmación */}
+      {showConfirmModal && (
+        <ConfirmModal
+          message="¿Estás seguro de que deseas enviar esta solicitud de absentismo?"
+          onConfirm={confirmSave} // Llama a confirmSave al confirmar
+          onCancel={cancelConfirm} // Cierra el modal de confirmación si se cancela
+        />
+      )}
+
+      {/* Modal informativo */}
+      {showInfoModal && (
+        <InfoModal
+          message="Su solicitud de absentismo ha sido enviada exitosamente."
+          onClose={closeInfoModal} // Cierra el modal informativo y vuelve a la página principal
+        />
+      )}
     </PageContainer>
   );
 };

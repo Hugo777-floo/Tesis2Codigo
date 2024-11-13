@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import ConfirmModal from '../../components/ModalConfirmacion';
 import { EditarSolicitudModalProps } from './types';
 import {
   PageContainer,
@@ -34,6 +35,7 @@ const DetalleSolicitudModal: React.FC<EditarSolicitudModalProps> = ({
   });
 
   const [openSelectId, setOpenSelectId] = useState<string | null>(null); // Controla qué select está abierto
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const handleSelectOpen = (id: string) => setOpenSelectId(id);
   const handleSelectClose = () => setOpenSelectId(null);
@@ -43,13 +45,22 @@ const DetalleSolicitudModal: React.FC<EditarSolicitudModalProps> = ({
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSave = () => {
+  const handleSaveClick = () => {
+    setShowConfirmModal(true);
+  };
+
+  const confirmSave = () => {
     const formattedSolicitud = {
       ...formData,
-      fechaPermiso: formData.fechaPermiso.split('-').reverse().join('/'), // Convierte de 'YYYY-MM-DD' a 'DD/MM/YYYY'
+      fechaPermiso: formData.fechaPermiso.split('-').reverse().join('/'),
     };
     onSave(formattedSolicitud);
+    setShowConfirmModal(false);
     onRequestClose();
+  };
+
+  const cancelConfirm = () => {
+    setShowConfirmModal(false);
   };
 
   return (
@@ -144,10 +155,17 @@ const DetalleSolicitudModal: React.FC<EditarSolicitudModalProps> = ({
         </form>
         
         <ButtonContainer>
-          <SaveButton onClick={handleSave}>Guardar Cambios</SaveButton>
+          <SaveButton onClick={handleSaveClick}>Guardar Cambios</SaveButton>
           <CancelButton onClick={onRequestClose}>Cancelar</CancelButton>
         </ButtonContainer>
       </PageContainer>
+      {showConfirmModal && (
+        <ConfirmModal
+          message="¿Estás seguro de que deseas guardar los cambios?"
+          onConfirm={confirmSave}
+          onCancel={cancelConfirm}
+        />
+      )}
     </Modal>
   );
 };

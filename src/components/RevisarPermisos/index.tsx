@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
-import { PageContainer, HeaderContainer, Title, ButtonContainer, Button, SolicitudContainer, SolicitudInfo, ActionsContainer, Checkbox } from './styles';
+import {
+  PageContainer,
+  HeaderContainer,
+  Title,
+  ButtonContainer,
+  Button,
+  SolicitudContainer,
+  SolicitudInfo,
+  ActionsContainer,
+  Checkbox
+} from './styles';
 import DetalleSolicitudModal from '../ModalDetallePermiso';
+import ConfirmModal from '../../components/ModalConfirmacion';
+import InfoModal from '../../components/ModalInformativo'; // Importa el InfoModal
 import { Solicitud } from './types';
 
 interface RevisarSolicitudesProps {
@@ -23,6 +35,11 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
   const [seleccionados, setSeleccionados] = useState<boolean[]>(new Array(solicitudes.length).fill(false));
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [solicitudSeleccionada, setSolicitudSeleccionada] = useState<Solicitud | null>(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState('');
+  const [confirmAction, setConfirmAction] = useState<() => void>(() => {});
+  const [showInfoModal, setShowInfoModal] = useState(false); // Estado para InfoModal
+  const [infoMessage, setInfoMessage] = useState(''); // Mensaje para InfoModal
 
   const handleSeleccionarTodo = () => {
     const todosSeleccionados = seleccionados.every((seleccionado) => seleccionado);
@@ -33,16 +50,38 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
     const idsSeleccionados = solicitudes
       .filter((_, index) => seleccionados[index])
       .map((solicitud) => solicitud.id);
-    onRejectSelected(idsSeleccionados);
-    setSeleccionados(new Array(solicitudes.length).fill(false)); // Resetear selección
+
+    setConfirmMessage("¿Estás seguro de que deseas rechazar las solicitudes seleccionadas?");
+    setConfirmAction(() => () => {
+      onRejectSelected(idsSeleccionados);
+      setSeleccionados(new Array(solicitudes.length).fill(false));
+    });
+    setShowConfirmModal(true);
   };
 
   const handleAprobarSeleccionados = () => {
     const idsSeleccionados = solicitudes
       .filter((_, index) => seleccionados[index])
       .map((solicitud) => solicitud.id);
-    onApproveSelected(idsSeleccionados);
-    setSeleccionados(new Array(solicitudes.length).fill(false)); // Resetear selección
+
+    setConfirmMessage("¿Estás seguro de que deseas aprobar las solicitudes seleccionadas?");
+    setConfirmAction(() => () => {
+      onApproveSelected(idsSeleccionados);
+      setSeleccionados(new Array(solicitudes.length).fill(false));
+    });
+    setShowConfirmModal(true);
+  };
+
+  const handleRechazarSolicitud = (id: string) => {
+    setConfirmMessage("¿Estás seguro de que deseas rechazar esta solicitud?");
+    setConfirmAction(() => () => onReject(id));
+    setShowConfirmModal(true);
+  };
+
+  const handleAprobarSolicitud = (id: string) => {
+    setConfirmMessage("¿Estás seguro de que deseas aprobar esta solicitud?");
+    setConfirmAction(() => () => onApprove(id));
+    setShowConfirmModal(true);
   };
 
   const toggleCheckbox = (index: number) => {
@@ -59,6 +98,21 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
   const cerrarModal = () => {
     setModalIsOpen(false);
     setSolicitudSeleccionada(null);
+  };
+
+  const confirmActionAndClose = () => {
+    confirmAction();
+    setShowConfirmModal(false);
+    setInfoMessage("La solicitud se realizó con exito. Será Notificada al área de Gestión Humana y a su Jefe"); // Mensaje para InfoModal
+    setShowInfoModal(true); // Muestra el InfoModal
+  };
+
+  const cancelConfirm = () => {
+    setShowConfirmModal(false);
+  };
+
+  const closeInfoModal = () => {
+    setShowInfoModal(false);
   };
 
   return (
@@ -90,8 +144,8 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
               onChange={() => toggleCheckbox(index)}
             />
             <Button onClick={() => abrirModal(solicitud)} style={{ backgroundColor: 'blue' }}>Ver Detalle</Button>
-            <Button onClick={() => onReject(solicitud.id)} style={{ backgroundColor: 'red' }}>Rechazar Solicitud</Button>
-            <Button onClick={() => onApprove(solicitud.id)} style={{ backgroundColor: 'green' }}>Aprobar Solicitud</Button>
+            <Button onClick={() => handleRechazarSolicitud(solicitud.id)} style={{ backgroundColor: 'red' }}>Rechazar Solicitud</Button>
+            <Button onClick={() => handleAprobarSolicitud(solicitud.id)} style={{ backgroundColor: 'green' }}>Aprobar Solicitud</Button>
           </ActionsContainer>
         </SolicitudContainer>
       ))}
@@ -101,6 +155,23 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
           isOpen={modalIsOpen}
           onRequestClose={cerrarModal}
           solicitud={solicitudSeleccionada}
+        />
+      )}
+
+      {/* Modal de confirmación */}
+      {showConfirmModal && (
+        <ConfirmModal
+          message={confirmMessage}
+          onConfirm={confirmActionAndClose}
+          onCancel={cancelConfirm}
+        />
+      )}
+
+      {/* Modal informativo */}
+      {showInfoModal && (
+        <InfoModal
+          message={infoMessage}
+          onClose={closeInfoModal}
         />
       )}
     </PageContainer>

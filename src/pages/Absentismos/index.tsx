@@ -6,6 +6,8 @@ import EditarSolicitudModal from '../../components/ModalEditarAbsentismo';
 import NuevoPermisoPage from '../../components/ModalNuevoAbsentismo';
 import { Solicitud, RevisarSolicitudesDatos, Status } from './types';
 import RevisarSolicitudes from '../../components/RevisarAbsentismos';
+import InfoModal from '../../components/ModalInformativo';
+import ConfirmModal from '../../components/ModalConfirmacion';
 
 const PermissionsPage = () => {
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([
@@ -90,7 +92,11 @@ const PermissionsPage = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isNuevoPermisoPageOpen, setIsNuevoPermisoPageOpen] = useState(false);
   const [isRevisarSolicitudesOpen, setIsRevisarSolicitudesOpen] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false); // Estado para el modal informativo
+  const [showConfirmCancelModal, setShowConfirmCancelModal] = useState(false); // Estado para el modal de confirmación de cancelación
   const [selectedSolicitud, setSelectedSolicitud] = useState<Solicitud | null>(null);
+  const [solicitudToDelete, setSolicitudToDelete] = useState<string | null>(null); // Solicitud pendiente de eliminación
+  const [infoMessage, setInfoMessage] = useState(''); // Mensaje para el modal informativo
 
   const openModal = (solicitud: Solicitud) => {
     setSelectedSolicitud(solicitud);
@@ -128,12 +134,33 @@ const PermissionsPage = () => {
   const saveNewSolicitud = (newSolicitud: Solicitud) => {
     setSolicitudes((prevSolicitudes) => [...prevSolicitudes, newSolicitud]);
     closeNuevoPermisoPage();
+    setInfoMessage("La solicitud se realizó con exito. Será Notificada al área de Gestión Humana y a su Jefe."); // Mensaje informativo para nuevo absentismo
+    setShowInfoModal(true); // Muestra el modal informativo
   };
 
-  const deleteSolicitud = (id: string) => {
-    setSolicitudes((prevSolicitudes) =>
-      prevSolicitudes.filter((solicitud) => solicitud.id !== id)
-    );
+  const closeInfoModal = () => {
+    setShowInfoModal(false); // Cierra el modal informativo
+  };
+
+  const confirmCancelSolicitud = () => {
+    if (solicitudToDelete) {
+      setSolicitudes((prevSolicitudes) =>
+        prevSolicitudes.filter((solicitud) => solicitud.id !== solicitudToDelete)
+      );
+    }
+    setInfoMessage("La solicitud se realizó con exito. Será Notificada al área de Gestión Humana y a su Jefe."); // Mensaje informativo para cancelación
+    setShowInfoModal(true); // Muestra el modal informativo después de cancelar la solicitud
+    setShowConfirmCancelModal(false); // Cierra el modal de confirmación
+  };
+
+  const cancelSolicitud = (id: string) => {
+    setSolicitudToDelete(id); // Establece la solicitud pendiente de cancelación
+    setShowConfirmCancelModal(true); // Muestra el modal de confirmación de cancelación
+  };
+
+  const cancelConfirm = () => {
+    setShowConfirmCancelModal(false); // Cierra el modal de confirmación si se cancela
+    setSolicitudToDelete(null); // Limpia la solicitud pendiente de eliminación
   };
 
   const approveSolicitud = (id: string) => {
@@ -238,7 +265,7 @@ const PermissionsPage = () => {
               motivo={solicitud.motivo}
               onVerDetalle={() => openModal(solicitud)}
               onEditar={() => openEditModal(solicitud)}
-              onCancelar={() => deleteSolicitud(solicitud.id)}
+              onCancelar={() => cancelSolicitud(solicitud.id)}
             />
           ))}
 
@@ -259,8 +286,26 @@ const PermissionsPage = () => {
           )}
         </>
       )}
+
+      {/* Modal informativo */}
+      {showInfoModal && (
+        <InfoModal
+          message={infoMessage} // Muestra el mensaje adecuado
+          onClose={closeInfoModal}
+        />
+      )}
+
+      {/* Modal de confirmación de cancelación */}
+      {showConfirmCancelModal && (
+        <ConfirmModal
+          message="¿Estás seguro de que deseas cancelar esta solicitud?"
+          onConfirm={confirmCancelSolicitud}
+          onCancel={cancelConfirm}
+        />
+      )}
     </PageContainer>
   );
 };
 
 export default PermissionsPage;
+

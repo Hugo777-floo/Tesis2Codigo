@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { PageContainer, HeaderContainer, Title, Button, Input, TextArea, Select, Label } from './styles'; // Asegúrate de definir los estilos apropiados
+import { PageContainer, HeaderContainer, Title, Button, Input, TextArea, Select, Label } from './styles';
 import { Solicitud, Status } from './types';
+import ConfirmModal from '../../components/ModalConfirmacion';
+import InfoModal from '../../components/ModalInformativo'; // Importa el modal informativo
 
 interface NuevoPermisoPageProps {
   onSave: (newSolicitud: Solicitud) => void;
@@ -21,13 +23,19 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
   const [horaSalida, setHoraSalida] = useState('17:00');
   const [jefeNotificar, setJefeNotificar] = useState('');
   const [descripcion, setDescripcion] = useState('');
-  const [openSelectId, setOpenSelectId] = useState<string | null>(null); // Almacena el ID del select abierto
+  const [openSelectId, setOpenSelectId] = useState<string | null>(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false); // Estado para controlar el modal informativo
 
   const handleSelectOpen = (id: string) => setOpenSelectId(id);
   const handleSelectClose = () => setOpenSelectId(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setShowConfirmModal(true); // Muestra el modal de confirmación antes de guardar
+  };
+
+  const confirmSave = () => {
     const newSolicitud: Solicitud = {
       status: defaultStatus,
       fechaRegistro: defaultFechaRegistro,
@@ -37,10 +45,21 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
       horaEntrada,
       horaSalida,
       jefeNotificar,
-      usuario: 'Diego Torres', // Cambia esto por el usuario real si es necesario
+      usuario: 'Diego Torres',
       descripcion,
     };
     onSave(newSolicitud);
+    setShowConfirmModal(false); // Cierra el modal de confirmación
+    setShowInfoModal(true); // Muestra el modal informativo después de guardar
+  };
+
+  const closeInfoModal = () => {
+    setShowInfoModal(false);
+    onCancel(); // Vuelve a la página principal después de cerrar el modal informativo
+  };
+
+  const cancelConfirm = () => {
+    setShowConfirmModal(false); // Cierra el modal de confirmación si se cancela
   };
 
   return (
@@ -60,7 +79,7 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
             }}
             onFocus={() => handleSelectOpen('motivo')}
             onBlur={handleSelectClose}
-            isOpen={openSelectId === 'motivo'} // La flecha se rota solo si este select está abierto
+            isOpen={openSelectId === 'motivo'}
             required
           >
             <option value="" disabled>Selecciona un motivo</option>
@@ -116,9 +135,25 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
 
         <Button type="submit">Enviar</Button>
       </form>
+
+      {/* Modal de confirmación */}
+      {showConfirmModal && (
+        <ConfirmModal
+          message="¿Estás seguro de que deseas enviar esta solicitud de permiso?"
+          onConfirm={confirmSave}
+          onCancel={cancelConfirm}
+        />
+      )}
+
+      {/* Modal informativo */}
+      {showInfoModal && (
+        <InfoModal
+          message="Su solicitud ha sido enviada exitosamente."
+          onClose={closeInfoModal} // Cierra el modal informativo y vuelve a la página principal
+        />
+      )}
     </PageContainer>
   );
 };
 
 export default NuevoPermisoPage;
-

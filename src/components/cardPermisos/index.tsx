@@ -2,6 +2,7 @@ import React from 'react';
 import { Wrapper, Container, StatusText, InfoText, ButtonContainer, Button } from './styles';
 import { StatusComponentProps } from './types';
 
+
 const StatusComponent: React.FC<StatusComponentProps> = ({
   status,
   fechaRegistro,
