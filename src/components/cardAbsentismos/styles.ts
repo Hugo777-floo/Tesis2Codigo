@@ -31,8 +31,11 @@ export const Container = styled.div<ContainerProps>`
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  max-width: 300px;
+  width: 320px; /* Ancho fijo para todos los cards */
+  min-height: 150px; /* Altura mínima */
+  justify-content: space-between; /* Asegura que los elementos se distribuyan */
 `;
+
 
 export const StatusText = styled.h2<StatusTextProps>`
   color: ${({ status }) => statusColors[status]};
@@ -57,12 +60,14 @@ export const Button = styled.button<ButtonProps>`
   background-color: ${({ color }) => (color === 'blue' ? '#007bff' : '#d9534f')};
   color: #fff;
   border: none;
-  padding: 8px 12px;
+  padding: 8px 16px; /* Ajusta el tamaño del botón */
   font-size: 14px;
   border-radius: 4px;
   cursor: pointer;
+  width: 110px; /* Ancho fijo para todos los botones */
 
   &:hover {
     background-color: ${({ color }) => (color === 'blue' ? '#0056b3' : '#c9302c')};
   }
 `;
+

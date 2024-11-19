@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <Container>
-      <TitleComponent text="Sistema Autogestionable" />
+      <TitleComponent text="Portal de Gestión Personal" />
       <div style={{ display: "flex", justifyContent: "space-around", gap: "20px" }}>
         <Card
           imageSrc="/img/misdatos.png"
@@ -21,14 +21,14 @@ const Home = () => {
         />
         <Card
           imageSrc="/img/permisos.png"
-          title="Permisos"
+          title="Mis Permisos"
           description="Solicite los permisos que requerirá en ciertas fechas, además observe los permisos que ha ido solicitando."
           buttonText="Presiona Aquí"
           onButtonClick={() => history.push("/permisos")} // Navega a la ruta "/permisos"
         />
         <Card
           imageSrc="/img/absentismos.png"
-          title="Absentismos"
+          title="Mis Absentismos"
           description="Solicite sus fechas de absentismos en ciertas fechas, además observe los absentismos que ha ido solicitando."
           buttonText="Presiona Aquí"
           onButtonClick={() => history.push("/absentismos")} // Navega a la ruta "/absentismos"

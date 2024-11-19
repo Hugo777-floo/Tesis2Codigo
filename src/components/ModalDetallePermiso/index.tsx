@@ -9,16 +9,40 @@ import {
   Label,
   Value,
   TextArea,
-  CloseButton
+  CloseButton,
 } from './styles';
 
 const DetalleSolicitudModal: React.FC<DetalleSolicitudModalProps> = ({
   isOpen,
   onRequestClose,
-  solicitud
+  solicitud,
 }) => {
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Detalle de Solicitud">
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      contentLabel="Detalle de Solicitud"
+      style={{
+        overlay: {
+          backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente
+          zIndex: 1000, // Prioridad para estar encima de todo
+        },
+        content: {
+          top: '50%',
+          left: '50%',
+          right: 'auto',
+          bottom: 'auto',
+          marginRight: '-50%',
+          transform: 'translate(-50%, -50%)', // Centra el modal
+          borderRadius: '8px',
+          padding: '20px',
+          width: '600px', // Ancho fijo para el modal
+          maxWidth: '90vw', // Adaptabilidad en pantallas pequeñas
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Sombra suave para destacar
+          backgroundColor: '#fff', // Fondo blanco
+        },
+      }}
+    >
       <Container>
         <Title>Detalle de Solicitud</Title>
         <DetailContainer>

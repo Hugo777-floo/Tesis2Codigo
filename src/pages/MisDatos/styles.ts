@@ -199,3 +199,11 @@ export const DeleteButton = styled.button`
     outline: none;
   }
 `;
+
+export const SmallTitle = styled.h2`
+  font-size: 3em; /* Ajusta este tamaño según tus necesidades */
+  font-weight: bold;
+  color: #2d3e85; /* Cambia el color si es necesario */
+  margin-bottom: 20px; /* Espaciado inferior */
+  text-align: center; /* Centra el texto si aplica */
+`;

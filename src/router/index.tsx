@@ -26,9 +26,10 @@ const Router = () => {
   const navItems = [
     { label: "Menú" },
     { label: "Mis Datos" },
-    { label: "Permisos" },
-    { label: "Absentismos" },
+    { label: "Mis Permisos" },
+    { label: "Mis Absentismos" },
   ];
+  
 
   // Estado para el elemento activo
   const [activeItem, setActiveItem] = useState(navItems[0].label);
@@ -40,16 +41,17 @@ const Router = () => {
         setActiveItem("Mis Datos");
         break;
       case "/permisos":
-        setActiveItem("Permisos");
+        setActiveItem("Mis Permisos");
         break;
       case "/absentismos":
-        setActiveItem("Absentismos");
+        setActiveItem("Mis Absentismos");
         break;
       default:
         setActiveItem("Menú");
         break;
     }
   }, [location.pathname]);
+  
 
   // Define las imágenes basadas en la ruta actual
   const getImagesForSection = () => {
@@ -112,12 +114,13 @@ const Router = () => {
       history.push("/mis-datos");
     } else if (label === "Menú") {
       history.push("/home");
-    } else if (label === "Permisos") {
+    } else if (label === "Mis Permisos") {
       history.push("/permisos");
-    } else if (label === "Absentismos") {
+    } else if (label === "Mis Absentismos") {
       history.push("/absentismos");
     }
   };
+  
 
   return (
     <Suspense fallback={null}>

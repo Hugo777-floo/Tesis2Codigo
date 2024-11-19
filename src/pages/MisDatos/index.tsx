@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import {
   Container, Header, EditButton,FormContainer,FieldContainer,Label,
   Input,SelectContainer,SectionTitle,AceptarButton,CancelarButton,ButtonGroup, AddButton,
-  TitleContainer, ChildContainer, DeleteButton  } from "./styles";
+  TitleContainer, ChildContainer, DeleteButton,SmallTitle   } from "./styles";
 import styled from "styled-components";
 import TabContainer from "../../components/ContenedorDato"; // Asegúrate de importar correctamente
 import { Tab } from "../../components/ContenedorDato/types"; 
@@ -12,7 +12,7 @@ import ConfirmModal from "../../components/ModalConfirmacion";
 import InfoModal from "../../components/ModalInformativo";
 
 const MisDatos: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("Datos Personales");
+  const [activeTab, setActiveTab] = useState("Mis Datos Personales");
   const [showNotification, setShowNotification] = useState(true);
   const [isEditable, setIsEditable] = useState(false);
   const [openSelects, setOpenSelects] = useState<{ [key: string]: boolean }>({});
@@ -55,9 +55,9 @@ const MisDatos: React.FC = () => {
   const [backupHijos, setBackupHijos] = useState(hijos);
 
   const tabs: Tab[] = [
-    { label: "Datos Personales" },
-    { label: "Datos De Trabajo" },
-    { label: "Datos De Familia" },
+    { label: "Mis Datos Personales" },
+    { label: "Mis Datos De Trabajo" },
+    { label: "Mis Datos De Familia" },
   ];
 
   
@@ -125,7 +125,7 @@ const MisDatos: React.FC = () => {
   };
   const renderContent = () => {
     switch (activeTab) {
-      case "Datos Personales":
+      case "Mis Datos Personales":
         return (
           <FormContainer>
           <FieldContainer>
@@ -280,7 +280,7 @@ const MisDatos: React.FC = () => {
           </FieldContainer>
         </FormContainer>
         );
-      case "Datos De Trabajo":
+      case "Mis Datos De Trabajo":
         return (
           <FormContainer>
             <FieldContainer>
@@ -478,7 +478,7 @@ const MisDatos: React.FC = () => {
             </FieldContainer>
           </FormContainer>
         );
-      case "Datos De Familia":
+      case "Mis Datos De Familia":
         return (
           <div>
             <SectionTitle>Cónyuge</SectionTitle>
@@ -578,7 +578,7 @@ const MisDatos: React.FC = () => {
     <Container>
       <TabContainer tabs={tabs} onTabSelect={setActiveTab} />
       <Header>
-        <h2>{activeTab}</h2>
+      <SmallTitle>{activeTab}</SmallTitle>
         {showNotification && <Notification onClose={() => setShowNotification(false)} />}
         {!isEditable ? (
           <EditButton onClick={handleEditClick}>Editar</EditButton>

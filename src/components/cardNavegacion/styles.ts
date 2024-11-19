@@ -34,6 +34,8 @@ export const CardDescription = styled.p`
   color: #5a5a5a;
   margin: 10px 0;
   line-height: 1.5;
+  height: 100px; /* Establece una altura fija para las descripciones */
+  overflow: hidden; /* Oculta cualquier texto que exceda el límite */
 `;
 
 export const CardButton = styled.button`
@@ -44,7 +46,7 @@ export const CardButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  margin-top: 10px;
+  margin-top: auto; /* Empuja el botón hacia la parte inferior del contenedor */
 
   &:hover {
     background-color: #1f2a52;

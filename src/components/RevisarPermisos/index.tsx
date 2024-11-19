@@ -42,8 +42,11 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
   const [infoMessage, setInfoMessage] = useState(''); // Mensaje para InfoModal
 
   const handleSeleccionarTodo = () => {
-    const todosSeleccionados = seleccionados.every((seleccionado) => seleccionado);
-    setSeleccionados(new Array(solicitudes.length).fill(!todosSeleccionados));
+    setSeleccionados(new Array(solicitudes.length).fill(true)); // Selecciona todo
+  };
+
+  const handleDeseleccionarTodo = () => {
+    setSeleccionados(new Array(solicitudes.length).fill(false)); // Deselecciona todo
   };
 
   const handleRechazarSeleccionados = () => {
@@ -103,8 +106,8 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
   const confirmActionAndClose = () => {
     confirmAction();
     setShowConfirmModal(false);
-    setInfoMessage("La solicitud se realizó con exito. Será Notificada al área de Gestión Humana y a su Jefe"); // Mensaje para InfoModal
-    setShowInfoModal(true); // Muestra el InfoModal
+    setInfoMessage("La solicitud se realizó con éxito. Será notificada al área de Gestión Humana y a su Jefe");
+    setShowInfoModal(true);
   };
 
   const cancelConfirm = () => {
@@ -118,12 +121,11 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
   return (
     <PageContainer>
       <HeaderContainer>
-        <Title>Últimos Permisos Solicitados</Title>
+        <Title>Permisos Pendientes de Aprobación</Title>
         <ButtonContainer>
           <Button onClick={onClose}>Volver</Button>
-          <Button onClick={handleSeleccionarTodo}>
-            {seleccionados.every(Boolean) ? 'Deseleccionar Todos' : 'Seleccionar Todos'}
-          </Button>
+          <Button onClick={handleSeleccionarTodo}>Seleccionar Todos</Button>
+          <Button onClick={handleDeseleccionarTodo}>Deseleccionar Todos</Button>
           <Button onClick={handleRechazarSeleccionados} style={{ backgroundColor: 'red' }}>Rechazar Seleccionados</Button>
           <Button onClick={handleAprobarSeleccionados} style={{ backgroundColor: 'green' }}>Aprobar Seleccionados</Button>
         </ButtonContainer>
@@ -144,8 +146,6 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
               onChange={() => toggleCheckbox(index)}
             />
             <Button onClick={() => abrirModal(solicitud)} style={{ backgroundColor: 'blue' }}>Ver Detalle</Button>
-            <Button onClick={() => handleRechazarSolicitud(solicitud.id)} style={{ backgroundColor: 'red' }}>Rechazar Solicitud</Button>
-            <Button onClick={() => handleAprobarSolicitud(solicitud.id)} style={{ backgroundColor: 'green' }}>Aprobar Solicitud</Button>
           </ActionsContainer>
         </SolicitudContainer>
       ))}
@@ -158,7 +158,6 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
         />
       )}
 
-      {/* Modal de confirmación */}
       {showConfirmModal && (
         <ConfirmModal
           message={confirmMessage}
@@ -167,7 +166,6 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
         />
       )}
 
-      {/* Modal informativo */}
       {showInfoModal && (
         <InfoModal
           message={infoMessage}
@@ -179,4 +177,3 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
 };
 
 export default RevisarSolicitudes;
-
