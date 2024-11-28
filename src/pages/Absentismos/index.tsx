@@ -20,7 +20,7 @@ const PermissionsPage = () => {
       motivo: 'Vacaciones',
       jefeNotificar: 'Alejandra Gallegos',
       usuario: 'Diego Mendoza',
-      descripcion: 'Comenté tener una evaluación parcial, sin embargo ahora es un trabajo de investigación que requerirá más tiempo',
+      descripcion: 'Me dio conjuntivitis',
       documento: `${process.env.PUBLIC_URL}/doc/pruebaDocumento.pdf`,
     },
     {
@@ -60,7 +60,7 @@ const PermissionsPage = () => {
       documento: `${process.env.PUBLIC_URL}/doc/pruebaDocumento.pdf`,
       jefeNotificar: 'Diego Mendoza',
       usuario: 'Diego Mendoza',
-      descripcion: 'Comenté tener una evaluación parcial, sin embargo ahora es un trabajo de investigación que requerirá más tiempo',
+      descripcion: 'Me dio conjuntivitis y se me recetó unos días de descanso',
     },
     {
       id: "02",
@@ -164,11 +164,11 @@ const PermissionsPage = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isNuevoPermisoPageOpen, setIsNuevoPermisoPageOpen] = useState(false);
   const [isRevisarSolicitudesOpen, setIsRevisarSolicitudesOpen] = useState(false);
-  const [showInfoModal, setShowInfoModal] = useState(false); // Estado para el modal informativo
-  const [showConfirmCancelModal, setShowConfirmCancelModal] = useState(false); // Estado para el modal de confirmación de cancelación
+  const [showInfoModal, setShowInfoModal] = useState(false); 
+  const [showConfirmCancelModal, setShowConfirmCancelModal] = useState(false); 
   const [selectedSolicitud, setSelectedSolicitud] = useState<Solicitud | null>(null);
-  const [solicitudToDelete, setSolicitudToDelete] = useState<string | null>(null); // Solicitud pendiente de eliminación
-  const [infoMessage, setInfoMessage] = useState(''); // Mensaje para el modal informativo
+  const [solicitudToDelete, setSolicitudToDelete] = useState<string | null>(null); 
+  const [infoMessage, setInfoMessage] = useState(''); 
 
   const openModal = (solicitud: Solicitud) => {
     setSelectedSolicitud(solicitud);
@@ -206,12 +206,12 @@ const PermissionsPage = () => {
   const saveNewSolicitud = (newSolicitud: Solicitud) => {
     setSolicitudes((prevSolicitudes) => [...prevSolicitudes, newSolicitud]);
     closeNuevoPermisoPage();
-    setInfoMessage("La solicitud se realizó con exito. Será Notificada al área de Gestión Humana y a su Jefe."); // Mensaje informativo para nuevo absentismo
-    setShowInfoModal(true); // Muestra el modal informativo
+    setInfoMessage("La solicitud se realizó con exito. Será Notificada al área de Gestión Humana y a su Jefe."); 
+    setShowInfoModal(true); 
   };
 
   const closeInfoModal = () => {
-    setShowInfoModal(false); // Cierra el modal informativo
+    setShowInfoModal(false); 
   };
 
   const confirmCancelSolicitud = () => {
@@ -220,19 +220,19 @@ const PermissionsPage = () => {
         prevSolicitudes.filter((solicitud) => solicitud.id !== solicitudToDelete)
       );
     }
-    setInfoMessage("La solicitud se realizó con exito. Será Notificada al área de Gestión Humana y a su Jefe."); // Mensaje informativo para cancelación
-    setShowInfoModal(true); // Muestra el modal informativo después de cancelar la solicitud
-    setShowConfirmCancelModal(false); // Cierra el modal de confirmación
+    setInfoMessage("La solicitud se realizó con exito. Será Notificada al área de Gestión Humana y a su Jefe."); 
+    setShowInfoModal(true); 
+    setShowConfirmCancelModal(false); 
   };
 
   const cancelSolicitud = (id: string) => {
-    setSolicitudToDelete(id); // Establece la solicitud pendiente de cancelación
-    setShowConfirmCancelModal(true); // Muestra el modal de confirmación de cancelación
+    setSolicitudToDelete(id); 
+    setShowConfirmCancelModal(true); 
   };
 
   const cancelConfirm = () => {
-    setShowConfirmCancelModal(false); // Cierra el modal de confirmación si se cancela
-    setSolicitudToDelete(null); // Limpia la solicitud pendiente de eliminación
+    setShowConfirmCancelModal(false); 
+    setSolicitudToDelete(null); 
   };
 
   const approveSolicitud = (id: string) => {
@@ -359,15 +359,15 @@ const PermissionsPage = () => {
         </>
       )}
 
-      {/* Modal informativo */}
+      {}
       {showInfoModal && (
         <InfoModal
-          message={infoMessage} // Muestra el mensaje adecuado
+          message={infoMessage} 
           onClose={closeInfoModal}
         />
       )}
 
-      {/* Modal de confirmación de cancelación */}
+      {}
       {showConfirmCancelModal && (
         <ConfirmModal
           message="¿Estás seguro de que deseas cancelar esta solicitud?"

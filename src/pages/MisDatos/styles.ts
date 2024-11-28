@@ -32,14 +32,14 @@ export const EditButton = styled.button`
 `;
 
 export const AceptarButton = styled.button`
-  background-color: #28a745; /* Verde */
+  background-color: #28a745;
   color: white;
   border: none;
   padding: 10px 20px;
   font-size: 1em;
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 8px; /* Espacio reducido entre los botones */
+  margin-right: 8px; 
 
   &:hover {
     background-color: #218838;
@@ -47,7 +47,7 @@ export const AceptarButton = styled.button`
 `;
 
 export const CancelarButton = styled.button`
-  background-color: #a71d1d; /* Rojo oscuro */
+  background-color: #a71d1d; 
   color: white;
   border: none;
   padding: 10px 20px;
@@ -63,12 +63,12 @@ export const CancelarButton = styled.button`
 
 export const ButtonGroup = styled.div`
   display: flex;
-  gap: 0; /* Elimina el espacio entre los botones */
+  gap: 0; 
 `;
 
 export const FormContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Cambiamos a 3 columnas */
+  grid-template-columns: repeat(3, 1fr); 
   gap: 15px;
   margin-top: 20px;
 `;
@@ -93,8 +93,7 @@ export const Input = styled.input`
   color: #555;
   font-size: 0.9em;
 
-  /* Estilos para ocultar las flechas en campos de número */
-  /* Chrome, Safari, Edge, Opera */
+ 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -153,7 +152,7 @@ export const ChildContainer = styled.div`
   background-color: #f9f9f9;
 `;
 
-// Contenedor para el título "Hijos" y el botón de añadir
+
 export const TitleContainer = styled.div`
   display: flex;
   align-items: center;
@@ -161,19 +160,19 @@ export const TitleContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-// Botón Añadir
+
 export const AddButton = styled.button`
-  background-color: #1d4ed8; /* Azul */
+  background-color: #1d4ed8; 
   color: white;
   border: none;
   border-radius: 5px;
   padding: 8px 16px;
   font-size: 0.9em;
   cursor: pointer;
-  margin-left: 10px; /* Espacio entre el título y el botón */
+  margin-left: 10px; 
 
   &:hover {
-    background-color: #2563eb; /* Azul más claro */
+    background-color: #2563eb; 
   }
 
   &:focus {
@@ -182,17 +181,17 @@ export const AddButton = styled.button`
 `;
 
 export const DeleteButton = styled.button`
-  background-color: #e3342f; /* Rojo */
+  background-color: #e3342f;
   color: white;
   border: none;
   border-radius: 5px;
   padding: 6px 12px;
   font-size: 0.8em;
   cursor: pointer;
-  margin-top: 10px; /* Espacio en la parte superior */
+  margin-top: 10px; 
 
   &:hover {
-    background-color: #cc1f1a; /* Rojo más oscuro */
+    background-color: #cc1f1a; 
   }
 
   &:focus {
@@ -201,9 +200,9 @@ export const DeleteButton = styled.button`
 `;
 
 export const SmallTitle = styled.h2`
-  font-size: 3em; /* Ajusta este tamaño según tus necesidades */
+  font-size: 3em; 
   font-weight: bold;
-  color: #2d3e85; /* Cambia el color si es necesario */
-  margin-bottom: 20px; /* Espaciado inferior */
-  text-align: center; /* Centra el texto si aplica */
+  color: #2d3e85; 
+  margin-bottom: 20px; 
+  text-align: center; 
 `;

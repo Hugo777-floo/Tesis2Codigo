@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { PageContainer, HeaderContainer, Title, Button, Input, TextArea, Select, Label } from './styles';
 import { Solicitud, Status } from './types';
 import ConfirmModal from '../../components/ModalConfirmacion';
-import InfoModal from '../../components/ModalInformativo'; // Importa el modal informativo
-
+import InfoModal from '../../components/ModalInformativo'; 
 interface NuevoPermisoPageProps {
   onSave: (newSolicitud: Solicitud) => void;
   onCancel: () => void;
@@ -24,8 +23,8 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
   const [jefeNotificar, setJefeNotificar] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [openSelectId, setOpenSelectId] = useState<string | null>(null);
-  const [showConfirmModal, setShowConfirmModal] = useState(false); // Estado para el modal de confirmación
-  const [showInfoModal, setShowInfoModal] = useState(false); // Estado para el modal informativo
+  const [showConfirmModal, setShowConfirmModal] = useState(false); 
+  const [showInfoModal, setShowInfoModal] = useState(false); 
 
   const handleSelectOpen = (id: string) => setOpenSelectId(id);
   const handleSelectClose = () => setOpenSelectId(null);
@@ -37,7 +36,7 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setShowConfirmModal(true); // Muestra el modal de confirmación antes de guardar
+    setShowConfirmModal(true);
   };
 
   const confirmSave = () => {
@@ -54,17 +53,17 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
       descripcion,
     };
     onSave(newSolicitud);
-    setShowConfirmModal(false); // Cierra el modal de confirmación
-    setShowInfoModal(true); // Muestra el modal informativo después de guardar
+    setShowConfirmModal(false); 
+    setShowInfoModal(true); 
   };
 
   const closeInfoModal = () => {
     setShowInfoModal(false);
-    onCancel(); // Vuelve a la página principal después de cerrar el modal informativo
+    onCancel(); 
   };
 
   const cancelConfirm = () => {
-    setShowConfirmModal(false); // Cierra el modal de confirmación si se cancela
+    setShowConfirmModal(false); 
   };
 
   return (
@@ -88,11 +87,11 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
             required
           >
             <option value="" disabled>Selecciona un motivo</option>
-            <option value="vacaciones">Vacaciones</option>
-            <option value="enfermedad">Descanso Médico</option>
-            <option value="nacimiento">Nacimiento Hijo</option>
-            <option value="luto">Duelo</option>
-            <option value="Otro">Otro (Explique en Descripción del caso)</option>
+            <option value="Vacaciones">Vacaciones</option>
+            <option value="Descanso Médico">Descanso Médico</option>
+            <option value="Nacimiento Hijo">Nacimiento Hijo</option>
+            <option value="Duelo">Duelo</option>
+            <option value="Otro (Explique en Descripción del caso)">Otro (Explique en Descripción del caso)</option>
           </Select>
         </Label>
         
@@ -140,20 +139,20 @@ const NuevoPermisoPage: React.FC<NuevoPermisoPageProps> = ({ onSave, onCancel, d
         <Button type="submit">Enviar</Button>
       </form>
 
-      {/* Modal de confirmación */}
+      {}
       {showConfirmModal && (
         <ConfirmModal
           message="¿Estás seguro de que deseas enviar esta solicitud de absentismo?"
-          onConfirm={confirmSave} // Llama a confirmSave al confirmar
-          onCancel={cancelConfirm} // Cierra el modal de confirmación si se cancela
+          onConfirm={confirmSave} 
+          onCancel={cancelConfirm} 
         />
       )}
 
-      {/* Modal informativo */}
+      {}
       {showInfoModal && (
         <InfoModal
           message="Su solicitud de absentismo ha sido enviada exitosamente."
-          onClose={closeInfoModal} // Cierra el modal informativo y vuelve a la página principal
+          onClose={closeInfoModal} 
         />
       )}
     </PageContainer>

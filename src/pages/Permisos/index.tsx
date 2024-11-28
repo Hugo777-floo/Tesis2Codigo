@@ -206,11 +206,11 @@ const PermissionsPage = () => {
   const saveNewSolicitud = (newSolicitud: Solicitud) => {
     setSolicitudes((prevSolicitudes) => [...prevSolicitudes, newSolicitud]);
     closeNuevoPermisoPage();
-    setShowInfoModal(true); // Muestra el modal informativo después de guardar una nueva solicitud
+    setShowInfoModal(true); 
   };
 
   const closeInfoModal = () => {
-    setShowInfoModal(false); // Cierra el modal informativo y regresa a la pantalla principal
+    setShowInfoModal(false); 
   };
 
   const confirmCancelSolicitud = () => {
@@ -219,18 +219,18 @@ const PermissionsPage = () => {
         prevSolicitudes.filter((solicitud) => solicitud.id !== solicitudToDelete)
       );
     }
-    setShowInfoModal(true); // Muestra el modal informativo después de cancelar la solicitud
-    setShowConfirmCancelModal(false); // Cierra el modal de confirmación
+    setShowInfoModal(true); 
+    setShowConfirmCancelModal(false); 
   };
 
   const cancelSolicitud = (id: string) => {
-    setSolicitudToDelete(id); // Establece la solicitud pendiente de cancelación
-    setShowConfirmCancelModal(true); // Muestra el modal de confirmación de cancelación
+    setSolicitudToDelete(id); 
+    setShowConfirmCancelModal(true); 
   };
 
   const cancelConfirm = () => {
-    setShowConfirmCancelModal(false); // Cierra el modal de confirmación si se cancela
-    setSolicitudToDelete(null); // Limpia la solicitud pendiente de eliminación
+    setShowConfirmCancelModal(false); 
+    setSolicitudToDelete(null); 
   };
 
   const approveSolicitud = (id: string) => {
@@ -356,7 +356,7 @@ const PermissionsPage = () => {
         </>
       )}
 
-      {/* Modal informativo */}
+      {}
       {showInfoModal && (
         <InfoModal
           message="La solicitud se realizó con exito. Será Notificada al área de Gestión Humana y a su Jefe."
@@ -364,7 +364,7 @@ const PermissionsPage = () => {
         />
       )}
 
-      {/* Modal de confirmación de cancelación */}
+      {}
       {showConfirmCancelModal && (
         <ConfirmModal
           message="¿Estás seguro de que deseas cancelar esta solicitud?"

@@ -7,5 +7,5 @@ export interface StatusComponentProps {
   motivo: string;
   onVerDetalle: () => void; 
   onEditar?: () => void;
-  onCancelar: () => void; // Agregar esta línea
+  onCancelar: () => void; 
 }

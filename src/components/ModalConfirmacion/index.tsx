@@ -8,7 +8,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ message, onConfirm, onCance
 
   const handleConfirm = () => {
     onConfirm();
-    setIsConfirmed(true); // Cambia el estado a confirmado para mostrar el mensaje informativo
+    setIsConfirmed(true); 
   };
 
   const handleClose = () => {

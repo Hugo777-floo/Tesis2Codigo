@@ -24,7 +24,7 @@ const StatusComponent: React.FC<StatusComponentProps> = ({
         {status === 'Pendiente de Aprobación' ? (
           <>
             <Button color="blue" onClick={onEditar}>Editar</Button>
-            <Button color="red" onClick={onCancelar}>Cancelar</Button> {/* Botón de cancelar */}
+            <Button color="red" onClick={onCancelar}>Cancelar</Button> {}
           </>
         ) : (
           <Button color="blue" onClick={onVerDetalle}>Ver Detalle</Button>

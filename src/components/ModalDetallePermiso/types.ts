@@ -1,7 +1,7 @@
 export type Status = 'Aprobado' | 'Rechazado' | 'Pendiente de Aprobación';
 
 export interface Solicitud {
-    status: Status;               // Solo puede ser 'Aprobado', 'Rechazado', o 'Pendiente de Aprobación'
+    status: Status;               
     fechaRegistro: string;
     fechaPermiso: string;
     motivo: string;

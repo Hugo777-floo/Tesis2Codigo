@@ -17,11 +17,11 @@ export const ModalContent = styled.div`
   background-color: white;
   padding: 20px;
   border-radius: 8px;
-  width: 800px; /* Cambia este valor para hacerlo más ancho */
+  width: 800px; 
   max-width: 90%;
-  max-height: 90%; /* Limita la altura máxima para evitar que se desborde */
+  max-height: 90%; 
   text-align: center;
-  overflow-y: auto; /* Permite desplazamiento si el contenido excede la altura */
+  overflow-y: auto; 
 `;
 
 export const Image = styled.img`

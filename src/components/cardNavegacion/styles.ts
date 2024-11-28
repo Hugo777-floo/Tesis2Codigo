@@ -12,14 +12,14 @@ export const CardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   border: 1px solid #e0e0e0;
-  margin: 10px; /* Para un pequeño margen alrededor de cada tarjeta */
+  margin: 10px; 
 `;
 
 export const CardImage = styled.img`
   width: 100%;
-  height: auto; /* Mantiene la proporción de la imagen */
-  max-height: 120px; /* Ajusta esto según el tamaño de la imagen que desees */
-  object-fit: contain; /* Asegura que toda la imagen se muestre sin recortes */
+  height: auto;
+  max-height: 120px; 
+  object-fit: contain; 
   margin-bottom: 16px;
 `;
 
@@ -34,8 +34,8 @@ export const CardDescription = styled.p`
   color: #5a5a5a;
   margin: 10px 0;
   line-height: 1.5;
-  height: 100px; /* Establece una altura fija para las descripciones */
-  overflow: hidden; /* Oculta cualquier texto que exceda el límite */
+  height: 100px; 
+  overflow: hidden; 
 `;
 
 export const CardButton = styled.button`
@@ -46,7 +46,7 @@ export const CardButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  margin-top: auto; /* Empuja el botón hacia la parte inferior del contenedor */
+  margin-top: auto; 
 
   &:hover {
     background-color: #1f2a52;

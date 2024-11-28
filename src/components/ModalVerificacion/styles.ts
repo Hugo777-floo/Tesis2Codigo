@@ -7,8 +7,8 @@ export const Backdrop = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); // Color negro semitransparente
-  z-index: 999; // Asegura que esté debajo del modal
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 999; 
 `;
 
 export const ModalContainer = styled.div`
@@ -22,14 +22,14 @@ export const ModalContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  z-index: 1000; // Asegura que el modal esté encima del Backdrop
+  z-index: 1000; 
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: Arial, sans-serif;
 `;
 
-// Resto de los estilos del modal como Title, Message, Button, etc.
+
 export const Title = styled.h2`
   color: #1a1a1a;
   font-size: 1.5rem;

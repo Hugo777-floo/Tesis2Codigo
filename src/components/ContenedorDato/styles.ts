@@ -12,14 +12,14 @@ export const TabButton = styled.button<{ isActive: boolean }>`
   padding: 15px 10px;
   font-size: 1.2em;
   border: none;
-  border-right: 1px solid white; /* Añade un borde derecho entre las pestañas */
+  border-right: 1px solid white;
   cursor: pointer;
   font-weight: bold;
   color: white;
   background-color: ${({ isActive }) => (isActive ? "#1f2a52" : "#2a7b8d")};
 
   &:last-child {
-    border-right: none; /* Quita el borde derecho en el último elemento */
+    border-right: none; 
   }
 
   &:hover {

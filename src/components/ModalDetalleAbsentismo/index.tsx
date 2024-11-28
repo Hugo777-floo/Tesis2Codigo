@@ -24,8 +24,8 @@ const DetalleSolicitudModal: React.FC<DetalleSolicitudModalProps> = ({
   contentLabel="Detalle de Solicitud"
   style={{
     overlay: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente
-      zIndex: 1000, // Asegura que el modal se superponga a todo
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+      zIndex: 1000, 
     },
     content: {
       top: '50%',
@@ -33,11 +33,11 @@ const DetalleSolicitudModal: React.FC<DetalleSolicitudModalProps> = ({
       right: 'auto',
       bottom: 'auto',
       marginRight: '-50%',
-      transform: 'translate(-50%, -50%)', // Centra el modal
+      transform: 'translate(-50%, -50%)', 
       borderRadius: '8px',
       padding: '20px',
-      width: '600px', // Ancho fijo para el modal
-      maxWidth: '90vw', // Se adapta a pantallas pequeñas
+      width: '600px', 
+      maxWidth: '90vw', 
     },
   }}
 >
@@ -69,7 +69,7 @@ const DetalleSolicitudModal: React.FC<DetalleSolicitudModalProps> = ({
         <TextArea>{solicitud.descripcion}</TextArea>
       </DetailItem>
 
-      {/* Documento Adjunto */}
+      {}
       {solicitud.documento && (
         <DetailItem>
           <Label>Documento Adjunto</Label>

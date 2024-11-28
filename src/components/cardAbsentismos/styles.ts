@@ -31,9 +31,9 @@ export const Container = styled.div<ContainerProps>`
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  width: 320px; /* Ancho fijo para todos los cards */
-  min-height: 150px; /* Altura mínima */
-  justify-content: space-between; /* Asegura que los elementos se distribuyan */
+  width: 320px; 
+  min-height: 150px; 
+  justify-content: space-between; 
 `;
 
 
@@ -52,19 +52,19 @@ export const InfoText = styled.p`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: row; /* Coloca los botones en una fila */
-  gap: 8px; /* Espacio entre los botones */
+  flex-direction: row; 
+  gap: 8px; 
 `;
 
 export const Button = styled.button<ButtonProps>`
   background-color: ${({ color }) => (color === 'blue' ? '#007bff' : '#d9534f')};
   color: #fff;
   border: none;
-  padding: 8px 16px; /* Ajusta el tamaño del botón */
+  padding: 8px 16px; 
   font-size: 14px;
   border-radius: 4px;
   cursor: pointer;
-  width: 110px; /* Ancho fijo para todos los botones */
+  width: 110px; 
 
   &:hover {
     background-color: ${({ color }) => (color === 'blue' ? '#0056b3' : '#c9302c')};

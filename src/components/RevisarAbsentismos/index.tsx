@@ -12,7 +12,7 @@ import {
 } from './styles';
 import DetalleSolicitudModal from '../ModalDetalleAbsentismo';
 import ConfirmModal from '../../components/ModalConfirmacion';
-import InfoModal from '../../components/ModalInformativo'; // Importa el InfoModal
+import InfoModal from '../../components/ModalInformativo'; 
 import { Solicitud } from './types';
 
 interface RevisarSolicitudesProps {
@@ -38,15 +38,15 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState('');
   const [confirmAction, setConfirmAction] = useState<() => void>(() => {});
-  const [showInfoModal, setShowInfoModal] = useState(false); // Estado para InfoModal
-  const [infoMessage, setInfoMessage] = useState(''); // Mensaje para InfoModal
+  const [showInfoModal, setShowInfoModal] = useState(false); 
+  const [infoMessage, setInfoMessage] = useState(''); 
 
   const handleSeleccionarTodo = () => {
-    setSeleccionados(new Array(solicitudes.length).fill(true)); // Selecciona todos los elementos
+    setSeleccionados(new Array(solicitudes.length).fill(true)); 
   };
 
   const handleDeseleccionarTodo = () => {
-    setSeleccionados(new Array(solicitudes.length).fill(false)); // Deselecciona todos los elementos
+    setSeleccionados(new Array(solicitudes.length).fill(false)); 
   };
 
   const handleRechazarSeleccionados = () => {
@@ -106,7 +106,7 @@ const RevisarSolicitudes: React.FC<RevisarSolicitudesProps> = ({
   const confirmActionAndClose = () => {
     confirmAction();
     setShowConfirmModal(false);
-    setInfoMessage("La solicitud se realizó con éxito. Será notificada al área de Gestión Humana y a su Jefe");
+    setInfoMessage("La solicitud se realizó con éxito. Será notificada al área de Gestión Humana y a los usuarios");
     setShowInfoModal(true);
   };
 

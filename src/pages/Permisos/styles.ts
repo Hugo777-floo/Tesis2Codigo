@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const PageContainer = styled.div`
   padding: 24px;
   max-width: 800px;
-  margin: 60px auto 0 auto; /* Ajusta este valor según el alto del menú de navegación */
+  margin: 60px auto 0 auto; 
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -20,7 +20,7 @@ export const Title = styled.h1`
   font-weight: bold;
   color: #333;
   margin: 0;
-  margin-right: 32px; /* Añade espacio adicional entre el título y los botones */
+  margin-right: 32px; 
 `;
 
 export const ButtonContainer = styled.div`

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const PageContainer = styled.div`
   padding: 24px;
   max-width: 800px;
-  margin: 60px auto 0 auto; /* Ajusta este valor según el alto del menú de navegación */
+  margin: 60px auto 0 auto; 
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -12,9 +12,9 @@ export const PageContainer = styled.div`
 export const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Asegura que los botones y el título estén separados */
+  justify-content: space-between; 
   margin-bottom: 24px;
-  width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+  width: 100%; 
 `;
 
 
@@ -24,9 +24,9 @@ export const Title = styled.h1`
   color: #333;
   margin: 0;
   margin-right: 32px;
-  flex-grow: 1; /* Permite que el título ocupe el espacio restante */
-  white-space: nowrap; /* Evita que el texto se divida en líneas */
-  overflow: visible; /* Asegura que no se trunque el texto */
+  flex-grow: 1; 
+  white-space: nowrap; 
+  overflow: visible; 
 `;
 
 
@@ -44,7 +44,7 @@ export const Button = styled.button`
   font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
-  min-width: 180px; /* Define un ancho mínimo razonable */
+  min-width: 180px; 
   text-align: center;
 
   &:hover {

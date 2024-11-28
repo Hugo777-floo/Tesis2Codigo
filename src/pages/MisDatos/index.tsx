@@ -5,7 +5,7 @@ import {
   Input,SelectContainer,SectionTitle,AceptarButton,CancelarButton,ButtonGroup, AddButton,
   TitleContainer, ChildContainer, DeleteButton,SmallTitle   } from "./styles";
 import styled from "styled-components";
-import TabContainer from "../../components/ContenedorDato"; // Asegúrate de importar correctamente
+import TabContainer from "../../components/ContenedorDato"; 
 import { Tab } from "../../components/ContenedorDato/types"; 
 import Notification from '../../components/avisoDatos';
 import ConfirmModal from "../../components/ModalConfirmacion";
@@ -64,7 +64,7 @@ const MisDatos: React.FC = () => {
 
   const handleEditClick = () => {
     setIsEditable(true);
-    setShowNotification(false); // Oculta la notificación al hacer clic en Editar
+    setShowNotification(false); 
     setBackupData(formData);
     setBackupHijos(hijos);
   };
@@ -72,30 +72,30 @@ const MisDatos: React.FC = () => {
   const handleCancelClick = () => {
     setFormData(backupData);
     setHijos(backupHijos);
-    setIsEditable(false); // Deshabilita los campos después de guardar
+    setIsEditable(false); 
     setShowNotification(true);
   };
   
   const handleAcceptClick = () => {
-    setShowConfirmModal(true); // Muestra el modal de confirmación antes de aceptar
+    setShowConfirmModal(true); 
   };
 
   const confirmAccept = () => {
     setIsEditable(false);
     setShowNotification(true);
-    setShowConfirmModal(false); // Cierra el modal de confirmación
-    setShowInfoModal(true); // Muestra el modal informativo después de aceptar
+    setShowConfirmModal(false); 
+    setShowInfoModal(true); 
     setBackupData(formData);
     setBackupHijos(hijos);
   };
 
   const closeInfoModal = () => {
-    setShowInfoModal(false); // Cierra el modal informativo
+    setShowInfoModal(false); 
   };
 
   const cancelConfirm = () => {
-    setShowConfirmModal(false); // Cierra el modal de confirmación si se cancela
-    setIsEditable(true); // Permite seguir editando si se cancela la confirmación
+    setShowConfirmModal(false); 
+    setIsEditable(true); 
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -586,7 +586,7 @@ const MisDatos: React.FC = () => {
           <ButtonGroup>
             <AceptarButton onClick={handleAcceptClick}>Aceptar</AceptarButton>
             <CancelarButton onClick={handleCancelClick}>Cancelar</CancelarButton>
-            {/* Modal de confirmación */}
+            {}
             {showConfirmModal && (
               <ConfirmModal
                 message="¿Estás seguro de que deseas aceptar los cambios?"
@@ -599,7 +599,7 @@ const MisDatos: React.FC = () => {
       </Header>
       {renderContent()}
 
-      {/* Modal informativo */}
+      {}
       {showInfoModal && (
         <InfoModal
           message="La solicitud se realizó con exito. Será Notificada al área de Gestión Humana y a su Jefe."

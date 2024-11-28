@@ -22,19 +22,19 @@ const DetalleSolicitudModal: React.FC<EditarSolicitudModalProps> = ({
   solicitud,
   onSave,
 }) => {
-  // Función para convertir 'DD/MM/YYYY' a 'YYYY-MM-DD'
+  
   const formatDateToISO = (dateString: string) => {
     const [day, month, year] = dateString.split('/');
     return `${year}-${month}-${day}`;
   };
 
-  // Configuramos el estado inicial con los datos de solicitud y fecha en formato ISO
+  
   const [formData, setFormData] = useState({
     ...solicitud,
     fechaPermiso: formatDateToISO(solicitud.fechaPermiso),
   });
 
-  const [openSelectId, setOpenSelectId] = useState<string | null>(null); // Controla qué select está abierto
+  const [openSelectId, setOpenSelectId] = useState<string | null>(null); 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const handleSelectOpen = (id: string) => setOpenSelectId(id);
@@ -92,7 +92,7 @@ const DetalleSolicitudModal: React.FC<EditarSolicitudModalProps> = ({
               }}
               onFocus={() => handleSelectOpen('motivo')}
               onBlur={handleSelectClose}
-              isOpen={openSelectId === 'motivo'} // Controla la flecha del select
+              isOpen={openSelectId === 'motivo'} 
               required
             >
               <option value="" disabled>Selecciona un motivo</option>

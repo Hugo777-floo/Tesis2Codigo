@@ -31,10 +31,10 @@ const Router = () => {
   ];
   
 
-  // Estado para el elemento activo
+ 
   const [activeItem, setActiveItem] = useState(navItems[0].label);
 
-  // Actualiza el elemento activo basado en la ruta actual
+  
   useEffect(() => {
     switch (location.pathname) {
       case "/mis-datos":
@@ -53,7 +53,7 @@ const Router = () => {
   }, [location.pathname]);
   
 
-  // Define las imágenes basadas en la ruta actual
+ 
   const getImagesForSection = () => {
     switch (location.pathname) {
       case "/mis-datos":
